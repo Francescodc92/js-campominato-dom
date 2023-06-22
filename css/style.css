@@ -11,7 +11,8 @@ form#game-settings {
   text-align: center;
 }
 
-form#game-settings button#button-start {
+form#game-settings button#button-start,
+.modal .reset-button {
   margin-top: 1.875rem;
   padding: 10px 1.875rem;
   border-radius: 0.3125rem;
@@ -24,7 +25,8 @@ form#game-settings button#button-start {
   cursor: pointer;
 }
 
-form#game-settings button#button-start:hover {
+form#game-settings button#button-start:hover,
+.modal .reset-button:hover {
   animation-name: swing;
   animation-duration: 300ms;
 }
@@ -38,6 +40,7 @@ select#difficulty-level {
   margin: 1.875rem auto;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .game-container .game-cell-container {
@@ -70,6 +73,30 @@ select#difficulty-level {
 
 .game-container .game-cell.clicked {
   background-color: rgb(69, 69, 223);
+  color: #fff;
+}
+.modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  visibility: hidden;
+  opacity: 0;
+}
+.modal.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal .total-points {
+  font-size: 2rem;
   color: #fff;
 }
 
