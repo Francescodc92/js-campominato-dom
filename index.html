@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Griglia Campo Minato bonus</title>
+    <!--css -->
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <form action="" id="game-settings" method="post">
+      <h1>Campo minato</h1>
+      <label for="difficulty-level">scegli la difficoltà di gioco:</label>
+
+      <select name="difficultyLevel" id="difficulty-level">
+        <option value="easy">Facile</option>
+        <option value="medium">Medio</option>
+        <option value="hard">Difficile</option>
+      </select>
+      <button id="button-start" type="submit">Inizia</button>
+    </form>
+    <!--end form-->
+    <div class="game-container"></div>
+    <!-- end game container -->
+    <!--my js-->
+    <script src="./js/script.js"></script>
+  </body>
+</html>
