@@ -87,15 +87,14 @@ const randomNumberCreate = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+let cellWithoutBombs = []
 const cellClicched = function () {
   let itsBomb = false
   const currentId = this.id
   const cellsElements = document.querySelectorAll(".game-cell")
-  let cellWithoutBombs = []
   const currentElementCell = document.querySelector("#" + currentId)
 
   //inserire in una funzione che verifica se è una bomba
-  let bombId = ""
   bombArrayIndex.forEach((number) => {
     if (currentId == `cell${number}`) {
       bombId = "cell" + number
@@ -112,6 +111,8 @@ const cellClicched = function () {
   if (cellWithoutBombs.length == cellsNumber - 16) {
     gameEnd("hai vinto")
   }
+
+  console.log(cellWithoutBombs.length)
 
   if (!this.classList.contains("clicked") && !itsBomb) {
     playerPoint++
