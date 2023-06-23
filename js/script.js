@@ -26,8 +26,37 @@ const difficultyLevelSelect = document.getElementById("difficulty-level")
 const pointsElements = document.querySelectorAll(".points")
 const modalElement = document.querySelector(".modal")
 const resetButton = document.querySelector(".reset-button")
+const resultDisplay = document.getElementById("result")
 const bombArrayIndex = []
 let playerPoint = 0
+
+let cellsNumber
+function gameStart(e) {
+  const difficultyLevelValue = difficultyLevelSelect.value
+  e.preventDefault()
+  if (difficultyLevelValue == "easy") {
+    cellsNumber = 100
+  } else if (difficultyLevelValue == "medium") {
+    cellsNumber = 81
+  } else if (difficultyLevelValue == "hard") {
+    cellsNumber = 49
+  }
+  const numberBomb = 16
+
+  const classWidthElement =
+    difficultyLevelValue == "easy"
+      ? "easy"
+      : difficultyLevelValue == "medium"
+      ? "medium"
+      : "hard"
+  gameContainer.innerHTML = ""
+  for (let i = 1; i <= cellsNumber; i++) {
+    const createdElement = createElementHTML(i, classWidthElement)
+    gameContainer.append(createdElement)
+  }
+
+  createRandomBombArray(numberBomb, cellsNumber)
+}
 
 const createElementHTML = (index, classCellContainer) => {
   const htmlCellContainer = document.createElement("div")
@@ -61,17 +90,29 @@ const randomNumberCreate = (min, max) => {
 const cellClicched = function () {
   let itsBomb = false
   const currentId = this.id
+  const cellsElements = document.querySelectorAll(".game-cell")
+  let cellWithoutBombs = []
+  const currentElementCell = document.querySelector("#" + currentId)
 
   //inserire in una funzione che verifica se è una bomba
+  let bombId = ""
   bombArrayIndex.forEach((number) => {
     if (currentId == `cell${number}`) {
+      bombId = "cell" + number
       itsBomb = true
-      const currentElementCell = document.querySelector("#" + currentId)
       currentElementCell.style.backgroundColor = "red"
-      gameEnd()
+      gameEnd("hai perso")
     }
   })
-  //inserire in una funzione che aggiunge il punto e lo ritorna come valore
+
+  if (itsBomb == false) {
+    cellWithoutBombs.push(currentElementCell)
+  }
+
+  if (cellWithoutBombs.length == cellsNumber - 16) {
+    gameEnd("hai vinto")
+  }
+
   if (!this.classList.contains("clicked") && !itsBomb) {
     playerPoint++
     pointsElements.forEach((element) => {
@@ -81,36 +122,10 @@ const cellClicched = function () {
 
   this.classList.add("clicked")
 }
-const gameEnd = () => {
+const gameEnd = (result) => {
+  resultDisplay.innerHTML = ""
   modalElement.classList.add("active")
-}
-
-function gameStart(e) {
-  const difficultyLevelValue = difficultyLevelSelect.value
-  e.preventDefault()
-  const numberBomb = 16
-  let cellsNumber
-  if (difficultyLevelValue == "easy") {
-    cellsNumber = 100
-  } else if (difficultyLevelValue == "medium") {
-    cellsNumber = 81
-  } else if (difficultyLevelValue == "hard") {
-    cellsNumber = 49
-  }
-
-  const classWidthElement =
-    difficultyLevelValue == "easy"
-      ? "easy"
-      : difficultyLevelValue == "medium"
-      ? "medium"
-      : "hard"
-  gameContainer.innerHTML = ""
-  for (let i = 1; i <= cellsNumber; i++) {
-    const createdElement = createElementHTML(i, classWidthElement)
-    gameContainer.append(createdElement)
-  }
-
-  createRandomBombArray(numberBomb, cellsNumber)
+  resultDisplay.innerHTML = result
 }
 
 formSettingsGame.addEventListener("submit", gameStart)

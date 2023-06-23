@@ -5,9 +5,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+body {
+  min-height: 100vh;
+  position: relative;
+}
+
 form#game-settings {
   max-width: 37.5rem;
-  margin: 30px auto;
+  margin: 0 auto;
+  padding-top: 1.875rem;
   text-align: center;
 }
 
@@ -40,7 +47,6 @@ select#difficulty-level {
   margin: 1.875rem auto;
   display: flex;
   flex-wrap: wrap;
-  position: relative;
 }
 
 .game-container .game-cell-container {
@@ -90,6 +96,12 @@ select#difficulty-level {
   visibility: hidden;
   opacity: 0;
 }
+
+h2.point-display {
+  text-align: center;
+  color: #157412;
+  font-size: 1.875rem;
+}
 .modal.active {
   visibility: visible;
   opacity: 1;
@@ -97,6 +109,11 @@ select#difficulty-level {
 
 .modal .total-points {
   font-size: 2rem;
+  color: #fff;
+}
+
+.modal p#result {
+  font-size: 3.125rem;
   color: #fff;
 }
 
