@@ -91,7 +91,6 @@ let cellWithoutBombs = []
 const cellClicched = function () {
   let itsBomb = false
   const currentId = this.id
-  const cellsElements = document.querySelectorAll(".game-cell")
   const currentElementCell = document.querySelector("#" + currentId)
 
   //inserire in una funzione che verifica se è una bomba
@@ -112,8 +111,6 @@ const cellClicched = function () {
     gameEnd("hai vinto")
   }
 
-  console.log(cellWithoutBombs.length)
-
   if (!this.classList.contains("clicked") && !itsBomb) {
     playerPoint++
     pointsElements.forEach((element) => {
@@ -129,7 +126,8 @@ const gameEnd = (result) => {
   resultDisplay.innerHTML = result
 }
 
-formSettingsGame.addEventListener("submit", gameStart)
 resetButton.addEventListener("click", () => {
   window.location.reload()
 })
+
+formSettingsGame.addEventListener("submit", gameStart)
