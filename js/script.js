@@ -64,7 +64,6 @@ const createElementHTML = (index, classCellContainer) => {
   const htmlCellElement = document.createElement("div")
   htmlCellElement.setAttribute("id", `cell${index}`)
   htmlCellElement.classList.add("game-cell")
-  htmlCellElement.innerHTML = index
   htmlCellElement.addEventListener("click", cellClicched)
   htmlCellContainer.append(htmlCellElement)
 
@@ -98,13 +97,15 @@ const cellClicched = function () {
     if (currentId == `cell${number}`) {
       bombId = "cell" + number
       itsBomb = true
-      currentElementCell.style.backgroundColor = "red"
+      currentElementCell.classList.add('bomb')
       gameEnd("hai perso")
     }
   })
-
+  
+  
   if (itsBomb == false) {
     cellWithoutBombs.push(currentElementCell)
+    
   }
 
   if (cellWithoutBombs.length == cellsNumber - 16) {
@@ -116,13 +117,72 @@ const cellClicched = function () {
     pointsElements.forEach((element) => {
       element.innerHTML = playerPoint
     })
+    verifyRoundedCells(currentId)
   }
 
   this.classList.add("clicked")
 }
+
+verifyRoundedCells =  (cellId) => {
+  const numberCell = Number(cellId.replace('cell', ''))
+  const currentElement = document.querySelector('#'+ cellId)
+  let bombCounter = 0
+  const rowCellNumber = cellsNumber == 100 ? 10 : cellsNumber == 81 ? 9 : 7
+  const cellTop = numberCell - rowCellNumber
+  const cellTopLeft = numberCell - (rowCellNumber + 1) 
+  const cellTopRight = numberCell - (rowCellNumber - 1)
+  const cellLeft =  numberCell - 1 
+  const cellRight =  numberCell + 1
+  const cellBottom = numberCell + rowCellNumber
+  const cellBottomLeft =  numberCell + (rowCellNumber - 1) 
+  const cellBottomRight =  numberCell + (rowCellNumber + 1) 
+  
+  if(numberCell > rowCellNumber){
+    console.log('entrato1')
+    if(bombArrayIndex.includes(cellTop)){
+      bombCounter++
+    }
+    if(bombArrayIndex.includes(cellTopLeft) && cellTopLeft % rowCellNumber > 0){
+      bombCounter++
+    }
+    if(bombArrayIndex.includes(cellTopRight) && cellTopRight % rowCellNumber != 1 ){
+      bombCounter++  
+    }
+  }
+
+
+  if(bombArrayIndex.includes(cellLeft) && cellLeft % rowCellNumber > 0){
+    bombCounter++
+  }
+  if(bombArrayIndex.includes(cellRight) && cellRight % rowCellNumber !=  1){
+    bombCounter++
+  }
+    
+  
+  
+  if(numberCell <= (cellsNumber - rowCellNumber )){
+        if(bombArrayIndex.includes(cellBottom)){
+          bombCounter++
+        }
+        if(bombArrayIndex.includes(cellBottomLeft) && cellBottomLeft % rowCellNumber > 0){
+          bombCounter++
+        }
+        
+        if(bombArrayIndex.includes(cellBottomRight) && cellBottomRight % rowCellNumber != 1){
+          bombCounter++
+        }
+  }
+
+  currentElement.innerHTML = bombCounter
+}
+
 const gameEnd = (result) => {
+  const bgModalClass = result == 'hai vinto' ? 'win' : 'lose'
   resultDisplay.innerHTML = ""
   modalElement.classList.add("active")
+  setTimeout(() => {
+    modalElement.classList.add(bgModalClass)
+  }, 1000);
   resultDisplay.innerHTML = result
 }
 

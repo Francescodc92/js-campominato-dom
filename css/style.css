@@ -9,6 +9,11 @@
 body {
   min-height: 100vh;
   position: relative;
+  background-image:url(../img/bg.avif) ;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  color:#fff
 }
 
 form#game-settings {
@@ -42,22 +47,25 @@ select#difficulty-level {
   padding: 5px 10px;
 }
 
+label{
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
 .game-container {
-  max-width: 50rem;
+  max-width: 600px;
   margin: 1.875rem auto;
   display: flex;
   flex-wrap: wrap;
 }
 
 .game-container .game-cell-container {
-  height: 5rem;
+  height: 60px;
   padding: 0.3125rem;
 }
 
 .game-container .game-cell-container.hard {
   width: calc(100% / 7);
-  height: 5rem;
-  padding: 0.3125rem;
 }
 
 .game-container .game-cell-container.medium {
@@ -71,21 +79,37 @@ select#difficulty-level {
 .game-container .game-cell {
   width: 100%;
   height: 100%;
-  background-color: bisque;
-  line-height: calc(5rem - 0.625rem);
-  text-align: center;
+  background-color: transparent;
+  border: 2px solid rgb(46, 18, 46);
+  background-color: rgba(46, 18, 46, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
+
+
+.game-container .game-cell.clicked.bomb {
+  background-image: url(../img/bg-bomb.gif);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .game-container .game-cell.clicked {
-  background-color: rgb(69, 69, 223);
+  background: rgb(2,0,36);
+  background: radial-gradient(circle, rgba(2,0,36,1) 82%, rgba(9,9,121,1) 86%, rgba(58,8,58,1) 95%);
   color: #fff;
 }
+
+
+
 .modal {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   display: flex;
@@ -97,15 +121,30 @@ select#difficulty-level {
   opacity: 0;
 }
 
+.modal.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal.win{
+  background-image: url(../img/bg-win.gif);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.modal.lose{
+   background-image: url(../img/bg-lose.gif);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 h2.point-display {
   text-align: center;
   color: #157412;
   font-size: 1.875rem;
 }
-.modal.active {
-  visibility: visible;
-  opacity: 1;
-}
+
 
 .modal .total-points {
   font-size: 2rem;
